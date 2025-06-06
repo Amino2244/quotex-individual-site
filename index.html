@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quotex Prediction</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #0f0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 100px;
+    }
+    .signal {
+      font-size: 40px;
+      margin: 20px;
+    }
+    .refresh {
+      background: #0f0;
+      color: black;
+      padding: 10px 30px;
+      font-size: 20px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>📊 Quotex Signal Bot</h1>
+  <div class="signal" id="result">انتظر الإشارة...</div>
+  <button class="refresh" onclick="getSignal()">🔁 تحديث الإشارة</button>
+
+  <script>
+    function getSignal() {
+      fetch("/signal")
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("result").innerHTML =
+            `📈 الإشارة: <b>${data.signal}</b><br>💰 السعر: ${data.price}<br>⏱️ الوقت: ${data.timestamp}`;
+        });
+    }
+
+    setInterval(getSignal, 60000);
+    getSignal();
+  </script>
+</body>
+</html>
